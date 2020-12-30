@@ -71,10 +71,9 @@ public class Flip extends Rocket {
         if (y < HEIGHT * HEIGHT_MOD && counter > 500 && vy < 5) {
             aAim = 0;
             // cutoff point for overcompensating, average of vx and vy
-            // if (y > 2 * (Math.abs(vy) + Math.abs(vx))/2 && y > 25)
             if (y > 25) {
-                // aAim += (x - xTarget) / 1.5;
-                aAim += vx/1.5;
+                // aAim += vx/1.5;
+                aAim += vx/1.3;
             }
                 
             vAim = LANDING_V_AIM;

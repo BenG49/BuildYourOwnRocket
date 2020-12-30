@@ -16,6 +16,9 @@ public final class Simulation {
         new AmazingRocket(),
         new Pulsar94(),
         new SteadyBoi(),
+        new Rock(),
+        new Flip(),
+        new Flip(50, 1.3F, 0.9F, -3, 30, 40, 50),
     };
 
     private Graphics graphics = new Graphics(rockets);

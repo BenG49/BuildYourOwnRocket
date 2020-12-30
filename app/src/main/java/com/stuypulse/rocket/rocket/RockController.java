@@ -1,7 +1,5 @@
 package com.stuypulse.rocket.rocket;
 
-import javax.lang.model.util.ElementScanner6;
-
 public class RockController {
 
     public RockController() {}
@@ -43,9 +41,7 @@ public class RockController {
         // -------------VX COEFFICIENT------------- //
         if (Math.abs(vx) > 15)
             vxCoefficient = Math.abs(a);
-        else if (Math.abs(vx) < 5)
-            vxCoefficient = Math.abs(vx) * 1.25;
-        else
+        else 
             vxCoefficient = Math.abs(vx);
         
         // -------------ANGLE------------- //
