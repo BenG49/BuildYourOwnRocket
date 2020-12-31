@@ -18,7 +18,7 @@ public final class Simulation {
         new SteadyBoi(),
         // new Rock(),
         new Flip(),
-        new Flip(55, 1.75F, 0.9F, -3, 30, 40, 35),
+        // new Flip(55, 1.75F, 0.9F, -3, 30, 40, 35),
     };
 
     private Graphics graphics = new Graphics(rockets);

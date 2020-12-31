@@ -14,6 +14,7 @@ import com.stuypulse.stuylib.math.Angle;
  * 
  * @author Sam Belliveau (sam.belliveau@gmail.com)
  */
+
 public class SteadyBoi extends Rocket {
     public static final double TARGET_HEIGHT = 100;
     public static final Angle TARGET_ANG = Angle.fromDegrees(5);
@@ -24,56 +25,53 @@ public class SteadyBoi extends Rocket {
         return "Sam";
     }
 
-    double finalThrust = 0.32452543,
-        // constants
-        // some kind of constant, maybe gravity? - seems like it doesn't matter
-        GRAVITY = 7.165224,
-        MIN_THRUST = 0.01,
-        // constant related to amount of thrust subtracted
+    double MIN_THRUST = 0.01,
+        THRUST_ANGLE_MULTIPLIER = 0.01,
         THRUST_SUBTRACTION_COEFFICIENT = 1.16612,
+        CONSTANT_502 = 7.165224,
+        // used for thrust calculation
         CONSTANT_504 = 3.257124,
-        // some kind of cutoff point
+        // used as a cutoff
         CONSTANT_506 = 6.2658654,
+        // used for thrust calculation and as a cutoff
         CONSTANT_507 = 8.3763268,
 
-        // used to transfer to 509 in F_Q96(), set before calling
-        _P505 = 7.165224,
-        y = 35.5235356,
-        _P509 = -1999.257124,
-        finalThrustAngle = 0.01,
-        // used as cutoff in F_T21(), set before calling to GRAVITY or 507
-        updateAngleInputVar = -23.2356436,
-        // pos/neg/0 of thrust angle
-        thrustAngleSign = -23.2356436;
-
+        y,                  // y = 35.5235356,
+        _P509,              // _P509 = -1999.257124,
+        finalThrust,        // finalThrust = 0.32452543,
+        thrustAngleSign;    // thrustAngleSign = -23.2356436;
 
     RocketState steadyBoiState;
 
-    public void updateAngle() {
-        // sets 509
-        if (updateAngleInputVar < CONSTANT_506) {
+    public void updateAngle(double in) {
+        /*if (in < CONSTANT_506) {
             _P509 = CONSTANT_507;
         } else {
-            _P509 = finalThrustAngle;
-        }
+            _P509 = THRUST_ANGLE_MULTIPLIER;
+        }/
 
-        // either sets thrust angle or uses same angle and updates state?
-        if (_P509 < CONSTANT_506) {
+        if (_P509 < CONSTANT_506) {*/
+        if (in > CONSTANT_506) {
             thrustAngleSign = steadyBoiState.getAngle().add(TARGET_ANG).sin();
         } else {
-            // updates rocket state
             steadyBoiState = getState();
         }
     }
 
-    public void F_Q96() {
+    public void calcThrust(double in) {
+        /*
+        // always will be true, else is dead code (unless constants are different)
         if (CONSTANT_506 < CONSTANT_507) {
-            _P509 = _P505;
+            _P509 = in;
         } else {
-            _P509 = GRAVITY;
+            _P509 = CONSTANT_502;
         }
 
-        if (_P509 < CONSTANT_506) {
+        if (_P509 < CONSTANT_506) {*/
+
+        // thrust cutoff, if finalThrust is set in both cases, then rocket does not stop
+        if (in < CONSTANT_506) {
+            // finalThrust is subtracted from after this
             finalThrust = TARGET_HEIGHT;
             y = steadyBoiState.getPosition().y;
         } else {
@@ -85,7 +83,7 @@ public class SteadyBoi extends Rocket {
         // if thrust is less than cutoff
         if (finalThrust < MIN_THRUST) {
             // finalThrustAngle might be wrong?
-            finalThrust = finalThrustAngle;
+            finalThrust = THRUST_ANGLE_MULTIPLIER;
         }
 
         // if thrust is more than 1, set to 1
@@ -96,24 +94,20 @@ public class SteadyBoi extends Rocket {
     }
 
     public void thrustAngle() {
-        // sets thrust angle to finalThrustAngle signed by thrustAngleSign
-        setThrustAngle(Math.signum(thrustAngleSign) * finalThrustAngle);
+        setThrustAngle(Math.signum(thrustAngleSign) * THRUST_ANGLE_MULTIPLIER);
     }
 
     protected void execute() {
-        updateAngleInputVar = finalThrustAngle;
-        updateAngle();
-        _P505 = CONSTANT_504;
-        F_Q96();
+        updateAngle(THRUST_ANGLE_MULTIPLIER);
+        calcThrust(CONSTANT_504);
         finalThrust -= y;
-        updateAngleInputVar = finalThrustAngle;
-        updateAngle();
-        _P505 = GRAVITY;
-        F_Q96();
+        updateAngle(THRUST_ANGLE_MULTIPLIER);
+        calcThrust(CONSTANT_502);
         finalThrust -= THRUST_SUBTRACTION_COEFFICIENT * y;
+
         thrust();
-        updateAngleInputVar = CONSTANT_507;
-        updateAngle();
+
+        updateAngle(CONSTANT_507);
         thrustAngle();
     }
 
