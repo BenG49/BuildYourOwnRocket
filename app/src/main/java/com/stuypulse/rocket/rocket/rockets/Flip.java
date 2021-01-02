@@ -68,7 +68,7 @@ public class Flip extends Rocket {
 
         // -- flip -- //
         // landing
-        if (y < HEIGHT * HEIGHT_MOD && counter > 500 && vy < 5) {
+        if (y < HEIGHT * HEIGHT_MOD && counter > 500) {
             aAim = 0;
             // cutoff point for overcompensating, average of vx and vy
             if (y > 25) {

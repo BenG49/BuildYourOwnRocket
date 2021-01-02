@@ -8,17 +8,17 @@ import com.stuypulse.rocket.rocket.rockets.*;
 public final class Simulation {
 
     private Rocket[] rockets = {
-        // new ExampleRocket(),
-        // new CoolestRocket(),
-        // new Pensil15(),
-        // new ProjectBigEnergy(),
-        // new Yasuo(),
-        // new AmazingRocket(),
-        // new Pulsar94(),
+        new ExampleRocket(),
+        new CoolestRocket(),
+        new Pensil15(),
+        new ProjectBigEnergy(),
+        new Yasuo(),
+        new AmazingRocket(),
+        new Pulsar94(),
         new SteadyBoi(),
-        // new Rock(),
-        new Flip(),
-        // new Flip(55, 1.75F, 0.9F, -3, 30, 40, 35),
+        new Rock(),
+        new Flip(55, 1.75F, 0.9F, -3, 30, 40, 35),
+        new PP(),
     };
 
     private Graphics graphics = new Graphics(rockets);
