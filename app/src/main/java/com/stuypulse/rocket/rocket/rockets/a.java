@@ -4,7 +4,7 @@ import java.awt.Color;
 import com.stuypulse.rocket.rocket.Rocket;
 import com.stuypulse.stuylib.control.PIDController;
 
-public class PP extends Rocket {
+public class a extends Rocket {
 
     // constants
     private final int FLIP_HEIGHT;
@@ -54,7 +54,7 @@ public class PP extends Rocket {
      * @param FALLING_A_CUTOFF Above this angle (neg or pos), thrust downgrades to FALLING_THRUST.
      * @param FALLING_X_CUTOFF Above this x velocity, thrust downgrades to FALLING_THRUST.
      */
-    public PP(int FLIP_HEIGHT, int LANDING_HEIGHT, double FLIP_VY_AIM, double LANDING_VY_AIM,
+    public a(int FLIP_HEIGHT, int LANDING_HEIGHT, double FLIP_VY_AIM, double LANDING_VY_AIM,
               double TAKEOFF_VY_AIM, double FALLING_THRUST, int FALLING_A_CUTOFF, int FALLING_X_CUTOFF) {
         this.FLIP_HEIGHT = FLIP_HEIGHT;
         this.LANDING_HEIGHT = LANDING_HEIGHT;
@@ -65,12 +65,12 @@ public class PP extends Rocket {
         this.FALLING_A_CUTOFF = FALLING_A_CUTOFF;
         this.FALLING_X_CUTOFF = FALLING_X_CUTOFF;
     }
-    public PP() {
+    public a() {
         this(110, 85, 30, -3, 30, 0.7, 180, 10);
     }
 
     public String getAuthor() {
-        return "";
+        return "a";
     }
 
     protected void execute() {
